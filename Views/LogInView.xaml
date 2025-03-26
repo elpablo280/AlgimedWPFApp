@@ -1,0 +1,13 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:viewmodels="clr-namespace:AlgimedWPFApp.ViewModels"
+        x:Class="AlgimedWPFApp.Views.LogInView"
+		Title="Log In" Height="450" Width="800">
+    <StackPanel>
+        <TextBlock>Login</TextBlock>
+        <TextBox Text="{Binding Login, Mode=OneWayToSource}" />
+        <TextBlock>Password</TextBlock>
+        <TextBox Text="{Binding Password, Mode=OneWayToSource}" />
+        <Button Content="Log In" Command="{Binding LogInCommand}" />
+    </StackPanel>
+</Window>

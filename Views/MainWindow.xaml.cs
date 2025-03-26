@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using AlgimedWPFApp.ViewModels;
+using SQLitePCL;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AlgimedWPFApp;
+namespace AlgimedWPFApp.Views;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -19,5 +21,10 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        // todo dispose или using
+        var db = new DBContext();
+        db.Database.EnsureCreated();
+        DataContext = new MainWindowViewModel(db);
     }
 }

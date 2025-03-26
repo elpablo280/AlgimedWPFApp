@@ -1,0 +1,55 @@
+﻿<Window x:Class="AlgimedWPFApp.Views.DataView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AlgimedWPFApp.Views"
+        mc:Ignorable="d"
+        Title="DataView" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0"
+                  ItemsSource="{Binding CurrencyRates}"
+                  SelectedItem="{Binding SelectedRate, Mode=TwoWay}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CellEditEnding="DataGrid_CellEditEnding">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyyy}', UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Cur_Abbreviation, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="MaxBottleNumber" Binding="{Binding Cur_Name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                <DataGridTextColumn Header="MaxUsedTips" Binding="{Binding Cur_OfficialRate, UpdateSourceTrigger=PropertyChanged}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding CurrencyRates}"
+                  SelectedItem="{Binding SelectedRate, Mode=TwoWay}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CellEditEnding="DataGrid_CellEditEnding">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyyy}', UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                <DataGridTextColumn Header="ModeId" Binding="{Binding Cur_Abbreviation, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Timer" Binding="{Binding Cur_Name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Destination" Binding="{Binding Cur_OfficialRate, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Speed" Binding="{Binding Cur_OfficialRate, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Type" Binding="{Binding Cur_OfficialRate, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Vollume" Binding="{Binding Cur_OfficialRate, UpdateSourceTrigger=PropertyChanged}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Get data from API" Command="{Binding LoadFromAPICommand}"/>
+            <Button Grid.Column="1" Content="Save to file" Command="{Binding SaveToFileCommand}"/>
+            <Button Grid.Column="2" Content="Load from file" Command="{Binding LoadFromFileCommand}"/>
+        </Grid>
+    </Grid>
+</Window>
