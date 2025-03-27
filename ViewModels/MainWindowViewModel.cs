@@ -22,28 +22,24 @@ namespace AlgimedWPFApp.ViewModels
 
         public MainWindowViewModel(DBContext context)
         {
-            RegisterCommand = new RelayCommand(async (a) => await RegisterUser());
-            LogInCommand = new RelayCommand(async (a) => await LogIn());
+            RegisterCommand = new RelayCommand((a) => RegisterUser());
+            LogInCommand = new RelayCommand((a) => LogIn());
             _context = context;
         }
 
         public RelayCommand RegisterCommand { get; }
         public RelayCommand LogInCommand { get; }
 
-        private async Task<string> RegisterUser()   // todo
+        private void RegisterUser()
         {
             RegisterView regView = new(_context);
             regView.Show();
-
-            return "";
         }
 
-        private async Task<string> LogIn()   // todo
+        private void LogIn()
         {
             LogInView loginView = new(_context);
             loginView.Show();
-
-            return "";
         }
     }
 }

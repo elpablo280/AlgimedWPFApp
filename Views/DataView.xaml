@@ -5,51 +5,71 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AlgimedWPFApp.Views"
         mc:Ignorable="d"
-        Title="DataView" Height="450" Width="800">
+        Title="Data" Height="450" Width="800" WindowState="Maximized" WindowStyle="SingleBorderWindow">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="0.2*"></RowDefinition>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <DataGrid Grid.Row="0"
-                  ItemsSource="{Binding CurrencyRates}"
-                  SelectedItem="{Binding SelectedRate, Mode=TwoWay}"
+                  Grid.Column="0"
+                  ItemsSource="{Binding Modes, Mode=TwoWay}"
                   AutoGenerateColumns="False"
-                  CanUserAddRows="False"
-                  CellEditEnding="DataGrid_CellEditEnding">
+                  SelectedItem="{Binding SelectedMode, Mode=TwoWay}"
+                  CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyyy}', UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Cur_Abbreviation, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="MaxBottleNumber" Binding="{Binding Cur_Name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                <DataGridTextColumn Header="MaxUsedTips" Binding="{Binding Cur_OfficialRate, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Max Bottle Number" Binding="{Binding MaxBottleNumber}" />
+                <DataGridTextColumn Header="Max Used Tips" Binding="{Binding MaxUsedTips}" />
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Grid.Row="1"
-                  ItemsSource="{Binding CurrencyRates}"
-                  SelectedItem="{Binding SelectedRate, Mode=TwoWay}"
+        <DataGrid Grid.Row="0"
+                  Grid.Column="1"
+                  ItemsSource="{Binding Steps, Mode=TwoWay}"
                   AutoGenerateColumns="False"
-                  CanUserAddRows="False"
-                  CellEditEnding="DataGrid_CellEditEnding">
+                  SelectedItem="{Binding SelectedStep, Mode=TwoWay}"
+                  CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyyy}', UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                <DataGridTextColumn Header="ModeId" Binding="{Binding Cur_Abbreviation, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Timer" Binding="{Binding Cur_Name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Destination" Binding="{Binding Cur_OfficialRate, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Speed" Binding="{Binding Cur_OfficialRate, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Type" Binding="{Binding Cur_OfficialRate, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Vollume" Binding="{Binding Cur_OfficialRate, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
+                <DataGridTextColumn Header="Mode ID" Binding="{Binding ModeId}" />
+                <DataGridTextColumn Header="Timer" Binding="{Binding Timer}" />
+                <DataGridTextColumn Header="Destination" Binding="{Binding Destination}" />
+                <DataGridTextColumn Header="Speed" Binding="{Binding Speed}" />
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}" />
+                <DataGridTextColumn Header="Volume" Binding="{Binding Volume}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Get data from API" Command="{Binding LoadFromAPICommand}"/>
-            <Button Grid.Column="1" Content="Save to file" Command="{Binding SaveToFileCommand}"/>
-            <Button Grid.Column="2" Content="Load from file" Command="{Binding LoadFromFileCommand}"/>
+            <Grid Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0">Enter filepath to Excel file</TextBlock>
+                <TextBox Grid.Row="1" Text="{Binding FilePath, Mode=OneWayToSource}" />
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Import Data" Grid.Column="0" Command="{Binding ImportDataCommand}"/>
+                    <Button Content="Load Data From Database" Grid.Column="1" Command="{Binding LoadDataCommand}"/>
+                </Grid>
+            </Grid>
+            <Button Grid.Column="2" Content="Edit Item" Command="{Binding EditItemCommand}"/>
+            <Button Grid.Column="3" Content="Delete Item" Command="{Binding DeleteItemCommand}"/>
         </Grid>
     </Grid>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using AlgimedWPFApp.ViewModels;
 using SQLitePCL;
+using System;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,13 +19,20 @@ namespace AlgimedWPFApp.Views;
 /// </summary>
 public partial class MainWindow : Window
 {
+    private readonly DBContext _context;
+
     public MainWindow()
     {
         InitializeComponent();
 
-        // todo dispose или using
-        var db = new DBContext();
-        db.Database.EnsureCreated();
-        DataContext = new MainWindowViewModel(db);
+        _context = new DBContext();
+        _context.Database.EnsureCreated();
+        DataContext = new MainWindowViewModel(_context);
+        this.Closing += MainWindow_Closing;
+    }
+
+    private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+        _context.Dispose();
     }
 }

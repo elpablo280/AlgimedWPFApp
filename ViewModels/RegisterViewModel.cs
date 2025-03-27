@@ -54,21 +54,22 @@ namespace AlgimedWPFApp.ViewModels
 
         public async Task<bool> Register(string login, string password)
         {
-            // Check for unique login
+            // Проверка на уникальность логина
             if (await _context.Users.AnyAsync(u => u.Login == login))
             {
                 MessageBox.Show("Login already exists");
                 return false;
             }
 
-            // Check password against requirements
+            // Проверка на корректность пароля
             if (!IsValidPassword(password))
             {
                 MessageBox.Show("Password does not meet requirements: >= 6 symbols, >= 1 letter, >= 1 number");
                 return false;
             }
 
-            var user = new User { Login = login, Password = password };
+            var passwordHash = HashPassword(password);
+            var user = new User { Login = login, Password = passwordHash };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             MessageBox.Show("New user registered!");
@@ -76,7 +77,12 @@ namespace AlgimedWPFApp.ViewModels
             return true;
         }
 
-        private bool IsValidPassword(string password)
+        private static string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        private static bool IsValidPassword(string password)
         {
             return password.Length >= 6 && password.Any(char.IsDigit) && password.Any(char.IsLetter);
         }

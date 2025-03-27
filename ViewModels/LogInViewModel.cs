@@ -1,4 +1,5 @@
 ﻿using AlgimedWPFApp.Models;
+using AlgimedWPFApp.Views;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace AlgimedWPFApp.ViewModels
         public LogInViewModel(DBContext context)
         {
             _context = context;
-            LogInCommand = new RelayCommand(async (a) => await LogIn(Login, Password));
+            LogInCommand = new RelayCommand((a) => LogIn(Login, Password));
         }
 
         public RelayCommand LogInCommand { get; }
@@ -50,7 +51,7 @@ namespace AlgimedWPFApp.ViewModels
             RequestClose?.Invoke(this, EventArgs.Empty);
         }
 
-        public async Task<bool> LogIn(string login, string password)
+        public bool LogIn(string login, string password)
         {
             var user = _context.Users.SingleOrDefault(u => u.Login == login);
             if (user == null)
@@ -61,6 +62,8 @@ namespace AlgimedWPFApp.ViewModels
 
             if (VerifyPassword(password, user.Password))
             {
+                DataView dataView = new(_context);
+                dataView.Show();
                 CloseWindow();
                 return true;
             }
@@ -71,11 +74,10 @@ namespace AlgimedWPFApp.ViewModels
             }
         }
 
-        private bool VerifyPassword(string enteredPassword, string password) // todo
+        // Проверка хэшированного пароля
+        private static bool VerifyPassword(string enteredPassword, string password)
         {
-            // Проверка хэшированного пароля
-            //return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
-            return enteredPassword == password;
+            return BCrypt.Net.BCrypt.Verify(enteredPassword, password);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlgimedWPFApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,10 @@ namespace AlgimedWPFApp.Views
     /// </summary>
     public partial class DataView : Window
     {
-        public DataView()
+        public DataView(DBContext context)
         {
             InitializeComponent();
+            DataContext = new DataViewModel(context);
         }
     }
 }
